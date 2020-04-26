@@ -63,7 +63,6 @@ public class MainActivity extends AppCompatActivity {
         //go to: data/data/app_name/databases there you will find your databases
 
         //Load Data from the database
-//        database = new MonsterDatabaseHelper(this);
         monsters = monsterDataService.getMonsters();
         //create adapter passing the data, and the context
         adapter = new MonsterRecyclerViewAdapter(monsters, this);
