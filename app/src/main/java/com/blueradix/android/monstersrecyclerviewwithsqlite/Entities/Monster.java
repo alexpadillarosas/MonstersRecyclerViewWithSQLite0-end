@@ -4,19 +4,26 @@ import java.io.Serializable;
 
 public class Monster implements Serializable {
 
-
     public Long id;
     public String name;
     public String description;
     public Integer scariness;
     public String imageFileName;
+    private Integer votes;
+    private Integer stars;
 
-    public Monster(Long id, String name, String description, Integer scariness, String imageFileName) {
+    public Monster() {
+
+    }
+
+    public Monster(Long id, String name, String description, Integer scariness, String imageFileName, Integer votes, Integer stars) {
         this.id = id;
         this.name = name;
         this.description = description;
         this.scariness = scariness;
         this.imageFileName = imageFileName;
+        this.votes = votes;
+        this.stars = stars;
     }
 
     public Long getId() {
@@ -55,6 +62,22 @@ public class Monster implements Serializable {
         return imageFileName;
     }
 
+    public Integer getVotes() {
+        return votes;
+    }
+
+    public void setVotes(Integer votes) {
+        this.votes = votes;
+    }
+
+    public Integer getStars() {
+        return stars;
+    }
+
+    public void setStars(Integer stars) {
+        this.stars = stars;
+    }
+
     public void setImageFileName(String imageFileName) {
         this.imageFileName = imageFileName;
     }
@@ -67,6 +90,8 @@ public class Monster implements Serializable {
                 ", description='" + description + '\'' +
                 ", scariness=" + scariness +
                 ", imageFileName='" + imageFileName + '\'' +
+                ", votes=" + votes +
+                ", stars=" + stars +
                 '}';
     }
 }
