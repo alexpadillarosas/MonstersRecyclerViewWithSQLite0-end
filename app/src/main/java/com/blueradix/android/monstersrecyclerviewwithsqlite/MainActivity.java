@@ -60,7 +60,7 @@ public class MainActivity extends AppCompatActivity {
         monsterDataService = new DataService();
         monsterDataService.init(this);
         //once your database is created, you can find it using Device File Explorer
-        //go to: data/data/app_name/databases there you will find your databases
+        //go to: data/data/app_package_name/databases there you will find your databases
 
         //Load Data from the database
         monsters = monsterDataService.getMonsters();
