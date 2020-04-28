@@ -2,7 +2,7 @@ package com.blueradix.android.monstersrecyclerviewwithsqlite.service;
 
 import android.content.Context;
 
-import com.blueradix.android.monstersrecyclerviewwithsqlite.Entities.Monster;
+import com.blueradix.android.monstersrecyclerviewwithsqlite.entities.Monster;
 import com.blueradix.android.monstersrecyclerviewwithsqlite.database.MonsterDatabaseHelper;
 
 import java.util.List;

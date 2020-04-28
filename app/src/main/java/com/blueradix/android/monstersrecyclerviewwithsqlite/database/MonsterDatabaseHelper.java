@@ -8,7 +8,7 @@ import android.database.sqlite.SQLiteOpenHelper;
 
 import androidx.annotation.Nullable;
 
-import com.blueradix.android.monstersrecyclerviewwithsqlite.Entities.Monster;
+import com.blueradix.android.monstersrecyclerviewwithsqlite.entities.Monster;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -20,8 +20,9 @@ import java.util.Random;
 public class MonsterDatabaseHelper extends SQLiteOpenHelper {
 
     private static final String TAG = MonsterDatabaseHelper.class.getName();
+
     private static MonsterDatabaseHelper mInstance = null;
-    private Context context = null;
+    private Context context;
 
     //create database constants
     private static final String DATABASE_NAME = "monster.db";
@@ -37,7 +38,7 @@ public class MonsterDatabaseHelper extends SQLiteOpenHelper {
     private static final String COL_VOTES = "VOTES";
     private static final String COL_STARS = "STARS";
 
-    //create sql statements
+    //create sql statements initial version
     private static final String CREATE_TABLE_ST = "CREATE TABLE " + TABLE_NAME + "(" + COL_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
             COL_NAME + " TEXT, " +
             COL_DESCRIPTION + " TEXT, " +
@@ -100,15 +101,11 @@ public class MonsterDatabaseHelper extends SQLiteOpenHelper {
         contentValues.put(COL_DESCRIPTION, description);
         contentValues.put(COL_SCARINESS, scariness);
         //we store the image name, after using
-        //long resId = parent.getResources().getIdentifier(arrayOfStrings[position], "drawable", mApplicationContext.getPackageName());
-        //you get the Id of the image as drawable, so you can use it in an image view
-        //                int resId = getResources().getIdentifier("bomb", "drawable", this.getPackageName());
-        //                imageView.setImageResource(resId);
         contentValues.put(COL_IMAGE, getRandomImageName());
 
         long result = db.insert(TABLE_NAME, null, contentValues);
         db.close();
-        //if result is -1  insert was not performed, otherwise will have the row ID of the newly inserted row
+        //if result is -1  insert was not performed due to an error, otherwise will have the row ID of the newly inserted row
         return result;
     }
 
@@ -116,8 +113,7 @@ public class MonsterDatabaseHelper extends SQLiteOpenHelper {
      * @return  A cursor of all monsters in the table called monster.
      */
     private Cursor getAll() {
-        SQLiteDatabase db = this.getWritableDatabase();
-
+        SQLiteDatabase db = this.getReadableDatabase();
         return db.rawQuery(GET_ALL_ST, null);
     }
 
@@ -138,9 +134,9 @@ public class MonsterDatabaseHelper extends SQLiteOpenHelper {
         contentValues.put(COL_DESCRIPTION, description);
         contentValues.put(COL_SCARINESS, scariness);
 
-        int numRowsUpdated = db.update(TABLE_NAME, contentValues, "ID = ?", new String[]{id.toString()});
+        int numOfRowsUpdated = db.update(TABLE_NAME, contentValues, "ID = ?", new String[]{id.toString()});
         db.close();
-        return numRowsUpdated != 1;
+        return numOfRowsUpdated == 1; //if your query is going to update more than 1 record (this is not the case) then the condition will be numRowsUpdated > 0
     }
 
     /**
@@ -150,9 +146,10 @@ public class MonsterDatabaseHelper extends SQLiteOpenHelper {
      */
     public boolean delete(Long id) {
         SQLiteDatabase db = this.getWritableDatabase();
-        int numOfAffectedRows = db.delete(TABLE_NAME, "ID = ?", new String[]{id.toString()});
+        //delete return the # of rows affected by the query
+        int numOfRowsDeleted = db.delete(TABLE_NAME, "ID = ?", new String[]{id.toString()});
         db.close();
-        return numOfAffectedRows != -1;
+        return numOfRowsDeleted == 1;//if your query is going to delete more than 1 record (this is not the case) then the condition will be numOfRowsDeleted > 0
     }
 
     /**
@@ -167,14 +164,12 @@ public class MonsterDatabaseHelper extends SQLiteOpenHelper {
     /**
      * @return a list of all monsters from the database table called monster
      */
-    public List<Monster> getMonsters(){
+    public List<Monster> getMonsters() {
         List<Monster> monsters = new ArrayList<>();
         Cursor cursor = getAll();
 
-        if(cursor.getCount() > 0){
-
+        if(cursor.getCount() > 0) {
             Monster monster;
-
             while (cursor.moveToNext()) {
                 Long id = cursor.getLong(0);
                 String name = cursor.getString(1);
@@ -190,7 +185,6 @@ public class MonsterDatabaseHelper extends SQLiteOpenHelper {
         }
         cursor.close();
         return monsters;
-
     }
 
 }
