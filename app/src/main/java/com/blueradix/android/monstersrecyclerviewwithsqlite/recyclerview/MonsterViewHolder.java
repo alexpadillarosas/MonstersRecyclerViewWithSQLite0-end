@@ -19,16 +19,17 @@ public class MonsterViewHolder extends RecyclerView.ViewHolder {
 
     //bind the recycler_item_view.xml elements
     public final ImageView monsterImageView;
-    public final TextView monsterName;
-    public final TextView monsterDescription;
+    public final TextView monsterNameEditText;
+    public final TextView monsterDescriptionEditText;
+    public final TextView monsterTotalVotesTextView;
 
     public MonsterViewHolder(@NonNull View itemView) {
         super(itemView);
 
         monsterImageView = itemView.findViewById(R.id.monsterImageView);
-        monsterName = itemView.findViewById(R.id.monsterName);
-        monsterDescription = itemView.findViewById(R.id.monsterDescription);
-
+        monsterNameEditText = itemView.findViewById(R.id.monsterNameEditText);
+        monsterDescriptionEditText = itemView.findViewById(R.id.monsterDescriptionEditText);
+        monsterTotalVotesTextView = itemView.findViewById(R.id.totalVotesTextView);
     }
     public void updateMonster(Monster monster){
 //        Difference between res and assets:
@@ -49,8 +50,9 @@ public class MonsterViewHolder extends RecyclerView.ViewHolder {
 //        Picasso.get().load("file:///android_asset/monsters/monster_22.png").into(monsterImageView);
 //        Picasso.get().load(R.drawable.monster_2).error(resID).into(monsterImageView);
         monsterImageView.setImageResource(resID);
-        this.monsterName.setText(monster.getName());
-        this.monsterDescription.setText(monster.getDescription());
+        this.monsterNameEditText.setText(monster.getName());
+        this.monsterDescriptionEditText.setText(monster.getDescription());
+        this.monsterTotalVotesTextView.setText(monster.getVotes() + " Votes");
     }
 
 

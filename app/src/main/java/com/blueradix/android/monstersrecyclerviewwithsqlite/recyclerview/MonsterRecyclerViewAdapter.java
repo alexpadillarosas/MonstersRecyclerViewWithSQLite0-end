@@ -32,7 +32,7 @@ public class MonsterRecyclerViewAdapter extends RecyclerView.Adapter<MonsterView
     @Override
     public MonsterViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         //inflate the custom layout
-        LayoutInflater inflater = LayoutInflater.from(context);
+        LayoutInflater inflater = LayoutInflater.from(parent.getContext());
 
         View monsterView = inflater.inflate(R.layout.recycler_item_view, parent, false);
 
