@@ -31,6 +31,11 @@ public class MonsterViewHolder extends RecyclerView.ViewHolder {
         monsterDescriptionEditText = itemView.findViewById(R.id.monsterDescriptionEditText);
         monsterTotalVotesTextView = itemView.findViewById(R.id.totalVotesTextView);
     }
+
+    /**
+     * Method used to update the data of the ViewHolder of a particular monster
+     * @param monster       The monster object containing the data to populate the correspondent MonsterViewHolder
+     */
     public void updateMonster(Monster monster){
 //        Difference between res and assets:
 //        https://www.concretepage.com/questions/413
@@ -43,12 +48,8 @@ public class MonsterViewHolder extends RecyclerView.ViewHolder {
 //        Understanding vector image format: vector drawable
 //        https://medium.com/androiddevelopers/understanding-androids-vector-image-format-vectordrawable-ab09e41d5c68
 
-//        Picasso.get().load("file:///android_asset/monsters/" + monster.imageFileName.substring(3) + ".png").into(monsterImageView);
         View rootView = monsterImageView.getRootView();
         int resID = rootView.getResources().getIdentifier(monster.imageFileName , "drawable" , rootView.getContext().getPackageName()) ;
-//        Picasso.get().load(resID).into(monsterImageView);
-//        Picasso.get().load("file:///android_asset/monsters/monster_22.png").into(monsterImageView);
-//        Picasso.get().load(R.drawable.monster_2).error(resID).into(monsterImageView);
         monsterImageView.setImageResource(resID);
         this.monsterNameEditText.setText(monster.getName());
         this.monsterDescriptionEditText.setText(monster.getDescription());
