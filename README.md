@@ -1,4 +1,7 @@
 # MonstersRecyclerViewWithSQLite1
+## This app is the final development of MonstersRecyclerViewWithSQLite0.
+
+## Features
 * Application with a RecyclerView implemented.
 * Shows Monsters registered in the database.
 * Create Monsters in the database.
